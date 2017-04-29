@@ -9,19 +9,12 @@ package ru.job4j;
 * @class Calculate
 */
 public class Calculate {
+	/**
+	* Main
+	* @param args - args
+	*/
 	public static void main(String[] args) {
-		System.out.println("Hello world");
+		System.out.println("Hello World");
 	}
 	
-/**
-* Sum
-* @param first первый аргумент
-* @param second второй аргумент
-* @return резултьат
-*/
-
-public static double add(double first,double second) {
-	return first+second;
-}
-
 }
