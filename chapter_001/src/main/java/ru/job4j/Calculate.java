@@ -12,4 +12,16 @@ public class Calculate {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 	}
+	
+/**
+* Sum
+* @param first первый аргумент
+* @param second второй аргумент
+* @return резултьат
+*/
+
+public static double add(double first,double second) {
+	return first+second;
+}
+
 }
