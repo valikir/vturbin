@@ -1,5 +1,13 @@
 package ru.job4j.calculator;
 
+/**
+* Calculator Test
+*
+* @author Valentin Turbin
+* @version 1
+* @since 30.04.2017
+*/
+
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
