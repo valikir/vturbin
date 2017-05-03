@@ -14,44 +14,43 @@ public class Calculator {
 	* @param result
 	*/
 	private double result;
-	public void add(double first, double second) {
 		/**
-		* Main.
-		* @param first - args
-		* @param second - args
-		* @param result - args
+		* Add.
+		* @param first первое значение
+		* @param second второе значение
 		*/
+	public void add(double first, double second) {
 		this.result = first + second;
 	}
-	public void substract(double first, double second) {
 		/**
 		* Substraction.
-		* @param first
-		* @param second
+		* @param first первое значение
+		* @param second второе значение
 		*/
+	public void substract(double first, double second) {
 		this.result = first - second;
 	}
-	public void div(double first, double second) {
 		/**
 		* Division.
-		* @param first
-		* @param second
+		* @param first первое значение
+		* @param second второе значение
 		*/
+	public void div(double first, double second) {
 		this.result = first / second;
 	}
-	public void multiple(double first, double second) {
 		/**
-		* Multiplication.
-		* @param first
-		* @param second
+		* Division.
+		* @param first первое значение
+		* @param second второе значение
 		*/
+	public void multiple(double first, double second) {
 		this.result = first * second;
 	}
-	public double getResult() {
 		/**
-		* get Result of operation.
-		* @param result - args
+		* Get result of operation.
+		* @return result результат
 		*/
+	public double getResult() {
         return this.result;
     }
 }

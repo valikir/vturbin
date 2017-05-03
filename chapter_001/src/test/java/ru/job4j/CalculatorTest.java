@@ -12,9 +12,15 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
+/**
+	* Main.
+	*
+	*/
 public class CalculatorTest {
-    @Test
+    /**
+	* Test Addition.
+	*/
+	@Test
     public void whenAddOnePlusOneThenTwo() {
         Calculator calc = new Calculator();
         calc.add(1D, 1D);
@@ -22,6 +28,9 @@ public class CalculatorTest {
         double expected = 2D;
         assertThat(result, is(expected));
     }
+	/**
+	* Test substraction.
+	*/
 	@Test
     public void whenSubstractOneMinusOneThenZero() {
         Calculator calc = new Calculator();
@@ -30,6 +39,9 @@ public class CalculatorTest {
         double expected = 0;
         assertThat(result, is(expected));
     }
+	/**
+	* Test division.
+	*/
 	@Test
     public void whenDivideFourByTwoThenTwo() {
         Calculator calc = new Calculator();
@@ -38,6 +50,9 @@ public class CalculatorTest {
         double expected = 2D;
         assertThat(result, is(expected));
     }
+	/**
+	* Test multiplication.
+	*/
 	@Test
     public void whenMultiplyFourByFourThenSixteen() {
         Calculator calc = new Calculator();
