@@ -12,8 +12,13 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-
+/**
+* Main Test.
+*/
 public class MaxTest {
+	/**
+	* Return max value of two values.
+	*/
     @Test
     public void whenOneBiggerThanTwoReturnOne() {
         Max value = new Max();

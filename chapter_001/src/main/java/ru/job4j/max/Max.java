@@ -9,9 +9,14 @@ package ru.job4j.max;
 */
 
 public class Max {
-	private int highest;
+	/**
+	* Main.
+	* @param first первое число
+	* @param second второе число
+	* @return возвратить высшее число из двух чисел
+	*
+	*/
 	public int max(int first, int second) {
-		this.highest = (first < second ? second : first);
-		return this.highest;
+		return (first < second ? second : first);
 	}
 }
