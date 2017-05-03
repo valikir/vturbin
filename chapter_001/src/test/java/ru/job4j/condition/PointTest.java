@@ -1,7 +1,7 @@
 package ru.job4j.condition;
 
 /**
-* Describe an x,y point.
+* Define x,y point.
 *
 * @author Valentin Turbin
 * @version 1
@@ -12,9 +12,16 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+/**
+* Point test.
+*/
+
 public class PointTest {
+	/**
+	* Test if point is on a graph.
+	*/
    @Test
-    public void isPointOnFunction() {
+    public void isPointOnGraph() {
         Point xandY = new Point(3, 5);
         boolean isOnGraph = xandY.is(1, 2);
         boolean expected = true;
