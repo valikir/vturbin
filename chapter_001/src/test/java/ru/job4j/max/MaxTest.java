@@ -26,4 +26,14 @@ public class MaxTest {
         int expected = 2;
         assertThat(highest, is(expected));
     }
+	/**
+	* Return max value of three values.
+	*/
+    @Test
+    public void ifThreeBiggerThanOneandTwoReturnThree() {
+        Max value = new Max();
+        int highest = value.max(1, 2, 3);
+        int expected = 3;
+        assertThat(highest, is(expected));
+    }
 }

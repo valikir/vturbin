@@ -13,10 +13,24 @@ public class Max {
 	* Main.
 	* @param first первое число
 	* @param second второе число
-	* @return возвратить высшее число из двух чисел
+	* @return max возвратить высшее число из двух чисел
 	*
 	*/
 	public int max(int first, int second) {
 		return (first < second ? second : first);
 	}
+
+	/**
+	* Main.
+	* @param first первое число
+	* @param second второе число
+	* @param third третее число
+	* @return max возвратить высшее число из трех чисел
+	*
+	*/
+	public int max(int first, int second, int third) {
+		int highestOfTwo = max(first, second);
+		return max(highestOfTwo, third);
+	}
+
 }
