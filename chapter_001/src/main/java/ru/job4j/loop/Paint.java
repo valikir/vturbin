@@ -23,12 +23,16 @@ public class Paint {
 		int width = h * 2 - 1;
 		for (int i = 1; i <= h; i++) {
 			for (int j = 1; j <= width; j++) {
-				build.append(" ");
-				if (j == width && i != h) {
+		if ((h - i) >= j || (h + i) <= j) {
+			build.append(" ");
+		} else {
+			build.append("^");
+		}
+						if (j == width && i != h) {
 					build.append("\r\n");
 				}
-		}
 	}
+		}
 	return build.toString();
 	}
 }
