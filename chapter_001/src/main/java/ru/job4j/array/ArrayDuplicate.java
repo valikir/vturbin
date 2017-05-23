@@ -1,5 +1,5 @@
 package ru.job4j.array;
-//import java.util.Arrays;
+import java.util.Arrays;
 
 /**
 * Delete duplicate of an array.
@@ -13,24 +13,22 @@ public class ArrayDuplicate {
 	/**
 	* @param cut длина обрезки массива
 	*/
-	private static int n = 1;
+	private static int n = 0;
 		/**
 	* @param array длина массива
 	* @return array
 	*/
 	public String[] remove(String[] array) {
-		for (int i = 0; i < array.length; i++) {
-			for (int k = i + 1; k < array.length; k++) {
+		for (int i = 0; i < array.length - n; i++) {
+			for (int k = i + 1; k < array.length - n; k++) {
 				if (array[i].equals(array[k])) {
 					String temp = array[k];
-					array[k] = array[array.length - n];
-					array[array.length - n] = temp;
+					array[k] = array[array.length - n - 1];
+					array[array.length - n - 1] = temp;
 					n++;
-				} else {
-				continue;
 				}
 			}
 		}
-		return array;
+		return Arrays.copyOf(array, n);
 	}
 }

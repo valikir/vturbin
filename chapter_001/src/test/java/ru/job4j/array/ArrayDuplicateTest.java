@@ -17,7 +17,7 @@ public class ArrayDuplicateTest {
 	/**
 	* Array.
 	*/
-	private String[] array = {"Privet", "Mir", "Mir", "Super", "Privet"};
+	private String[] array = {"Privet", "Mir", "Mir", "Super", "Privet", "Super"};
 		/**
 	* Return array without duplicate.
 	*/
