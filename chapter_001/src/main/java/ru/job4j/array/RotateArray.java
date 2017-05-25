@@ -11,7 +11,7 @@ package ru.job4j.array;
 public class RotateArray {
 	/**
 	* @param array длина массива
-	* @return array
+	* @return newArray
 	*/
 	public int[][] rotate(int[][] array) {
 		int[][] newArray = new int[array.length][array.length];

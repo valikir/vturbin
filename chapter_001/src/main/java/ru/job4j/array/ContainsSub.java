@@ -26,7 +26,6 @@ public class ContainsSub {
 			if (chOrigin[i] == chSub[j] && j != chSub.length - 1) {
 				j++;
 				System.out.println(j);
-				//System.out.println(chSub.length);
 			continue;
 			} else if (i == chOrigin.length - 1 && j == 0) {
 			return false;

@@ -1,7 +1,7 @@
 package ru.job4j.loop;
 
 /**
-* Max value Test.
+* Factorial Test.
 *
 * @author Valentin Turbin
 * @version 1
