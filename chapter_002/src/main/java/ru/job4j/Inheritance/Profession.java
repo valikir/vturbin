@@ -21,7 +21,8 @@ public class Profession {
 	* @param specialization специализация
 	*/
 	public String specialization;
-	
+
+
 	public Profession(String gradLevel, int expYear, String specialization) {
 		this.gradLevel = gradLevel;
 		this.expYear = expYear;

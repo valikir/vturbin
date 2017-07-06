@@ -10,9 +10,16 @@ package ru.job4j.Inheritance;
 
 
 public class Engineer extends Profession {
-	public Engineer(String gradLevel, int expYear, String specialization) {
-		this.gradLevel = gradLevel;
-		this.expYear = expYear;
-		this.specialization = specialization;
+	private Engineer(String gradLevel, int expYear, String specialization) {
+		super(gradLevel,expYear,specialization);
+	}
+	public void create(){
+
+	}
+	public void solve(){
+
+	}
+	public void research(){
+
 	}
 }
