@@ -66,10 +66,10 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "name", "testDescription", 123L, new String[]{"none"});
         Item item2 = new Item("test2", "name2", "testDescription", 123L, new String[]{"none"});
-        Item item3 = new Item("test3", "name3", "testDescription", 123L, new String[]{"none"});
+        //Item item3 = new Item("test3", "name3", "testDescription", 123L, new String[]{"none"});
         tracker.add(item);
         tracker.add(item2);
-        tracker.add(item3);
-        assertThat(tracker.findByName("name3"), is(item3));
+        //tracker.add(item3);
+        assertThat(tracker.findByName("name2"), is(item2));
     }
 }

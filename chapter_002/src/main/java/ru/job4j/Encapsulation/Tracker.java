@@ -1,5 +1,7 @@
 package ru.job4j.Encapsulation;
 
+import java.util.Arrays;
+
 /**
  * item class.
  *
@@ -45,16 +47,14 @@ public class Tracker {
     }
 
     public Item[] findByName(String key) {
-        Item[] result = null;
-        int i = 0;
-        for (Item item : items) {
-            if (item.getName().equals(key)) {
-                    result[i] = this.items[this.position];
-                    i++;
+        Item[] result = new Item[this.position];
+        int i;
+        for (i = 0; i < this.position; i++) {
+            if (this.items[i] != null && this.items[i].getName().equals(key)) {
+                    result[i]= this.items[i];
                 }
-                this.position++;
         }
-        return result;
+        return Arrays.copyOf(result,i);
     }
 
     public Item findById(String id) {
