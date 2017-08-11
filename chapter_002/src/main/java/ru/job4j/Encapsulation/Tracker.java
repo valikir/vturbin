@@ -48,23 +48,29 @@ public class Tracker {
 
     public Item[] findByName(String key) {
         Item[] result = new Item[this.position];
-        int i;
+        int i,k;
         for (i = 0; i < this.position; i++) {
-            if (this.items[i] != null && this.items[i].getName().equals(key)) {
-                    result[i]= this.items[i];
+            for (k = 0; k < this.position; k++) {
+                if (this.items[k].getName().equals(key)) {
+                    result[i] = this.items[k];
+                    i++;
                 }
+            }
         }
         return Arrays.copyOf(result,i);
     }
 
     public Item findById(String id) {
-        Item result = null;
-        for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
-                result = item;
-                break;
+        Item result = new Item(null,null,null, 0, null);
+        int i;
+        for (i = 0; i < this.position; i++) {
+                if (this.items[i].getId().equals(id)) {
+                    result = this.items[i];
+                }
+                else {
+                    result = null;
+                }
             }
-        }
         return result;
     }
     public Item[] getAll() {
