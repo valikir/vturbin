@@ -82,30 +82,41 @@ public class StartUI {
             System.out.println("5: Find items by name");
             System.out.println("6: Exit Program");
             String answer = input.ask("Select: ");
+           // String error = "error input";
 
             switch (answer) {
+
                 case AddNew:
                     this.createItem(input, tracker);
+                    break;
 
                 case ShowAll:
                     this.getAllItems(tracker);
+                    break;
 
                 case EditItem:
                     this.editItem(input, tracker);
+                    break;
 
                 case DeleteItem:
                     this.deleteItem(input, tracker);
+                    break;
 
                 case FindById:
                     this.findItemById(input, tracker);
+                    break;
 
                 case FindByName:
                     this.findItemByName(input, tracker);
+                    break;
 
                 case EXIT:
                     i = false;
                     System.out.println("I quit");
                     break;
+
+                default:
+                break;
 
             }
         }
