@@ -8,10 +8,15 @@ public class Square implements Shape {
     public String pic(){
         StringBuilder sb = new StringBuilder();
         sb.append("++++++");
+        sb.append("\n");
         sb.append("+    +");
+        sb.append("\n");
         sb.append("+    +");
+        sb.append("\n");
         sb.append("+    +");
+        sb.append("\n");
         sb.append("+    +");
+        sb.append("\n");
         sb.append("++++++");
         return sb.toString();
     }

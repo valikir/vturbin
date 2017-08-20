@@ -21,9 +21,10 @@ public class PaintTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        Paint paint= new Paint();
+        Paint paint = new Paint();
         paint.draw(new Triangle());
 
-        assertThat(out.toString(),is(String.format("    +    %s   +++   %s  +++++  %s +++++++ %s+++++++++",System.getProperty("line.separator"))));
+        assertThat(out.toString(),is(String.format("    +    %s   +++   %s  +++++  %s +++++++ %s+++++++++",System.getProperty("line.separator"),System.getProperty("line.separator"),System.getProperty("line.separator"),System.getProperty("line.separator"))));
+
     }
 }
