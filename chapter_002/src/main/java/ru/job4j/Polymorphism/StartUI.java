@@ -1,11 +1,20 @@
 package ru.job4j.Polymorphism;
 import ru.job4j.Encapsulation.*;
 
-
 /**
- * Created by vturb on 10-Aug-17.
+ * Created by vturb on 19-Aug-17.
  */
+
 public class StartUI {
+    private Input input;
+    private Tracker tracker;
+    private boolean i = true;
+
+    public StartUI(Input input,Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
+
     // Menu Keys
     private static final String AddNew = "0";
     private static final String ShowAll = "1";
@@ -16,25 +25,20 @@ public class StartUI {
     private static final String EXIT = "6";
 
     // Create new Item
-    public void createItem(ConsoleInput input,Tracker tracker){
+    public void createItem(Input input,Tracker tracker){
         String ItemName = input.ask("Enter item name: ");
         String ItemDesc = input.ask("Enter item description: ");
         int id = 0;
         tracker.add(new Item(String.valueOf(id++), ItemName, ItemDesc, System.currentTimeMillis(),null));
-        new StartUI().init();
     }
 
     // Get all Items
-    public void getAllItems(Input input,Tracker tracker){
+    public void getAllItems(Tracker tracker){
         System.out.println(tracker.getAll());
-        String exit = input.ask("Press 0 to exit to menu: ");
-        if (exit == "0") {
-            new StartUI().init();
-        }
     }
 
     // Edit item
-    public void editItem(ConsoleInput input,Tracker tracker){
+    public void editItem(Input input,Tracker tracker){
         System.out.println(tracker.getAll());
         String ItemSelect = input.ask("Enter item id to change the item: ");
         Item editItem = tracker.findById(ItemSelect);
@@ -45,76 +49,73 @@ public class StartUI {
         editItem.setDesc(changeDesc);
         //editItem.setComments(changeComment);
         tracker.update(editItem);
-        new StartUI().init();
     }
 
     // Delete item
-    public void deleteItem(ConsoleInput input,Tracker tracker){
+    public void deleteItem(Input input,Tracker tracker){
         System.out.println(tracker.getAll());
         String ItemSelect = input.ask("Enter item id to delete the item: ");
         Item deleteItem = tracker.findById(ItemSelect);
         tracker.delete(deleteItem);
-        new StartUI().init();
     }
 
     // Find item by Id
-    public void findItemById(ConsoleInput input,Tracker tracker){
+    public void findItemById(Input input,Tracker tracker){
         String ItemSelect = input.ask("Enter item id: ");
         Item itemId = tracker.findById(ItemSelect);
         System.out.println(itemId);
-        String exit = input.ask("Press 0 to exit to menu: ");
-        if (exit == "0") {
-            new StartUI().init();
-        }
     }
 
-    public void findItemByName(ConsoleInput input,Tracker tracker){
+    public void findItemByName(Input input,Tracker tracker){
         String ItemName = input.ask("Enter item id: ");
         Item[] itemsName = tracker.findByName(ItemName);
         System.out.println(itemsName);
-        String exit = input.ask("Press 0 to exit to menu: ");
-        if (exit == "0") {
-            new StartUI().init();
-        }
     }
 
     public void init() {
-        ConsoleInput input = new ConsoleInput();
-        Tracker tracker = new Tracker();
-        System.out.println("0: Add new Item");
-        System.out.println("1: Show all items");
-        System.out.println("2: Edit item");
-        System.out.println("3: Delete item");
-        System.out.println("4: Find item by Id");
-        System.out.println("5: Find items by name");
-        System.out.println("6: Exit Program");
-        String answer = input.ask("Select: ");
+        while (i == true) {
+            System.out.println("0: Add new Item");
+            System.out.println("1: Show all items");
+            System.out.println("2: Edit item");
+            System.out.println("3: Delete item");
+            System.out.println("4: Find item by Id");
+            System.out.println("5: Find items by name");
+            System.out.println("6: Exit Program");
+            String answer = input.ask("Select: ");
 
-        switch (answer) {
-            case AddNew:
-                this.createItem(input,tracker);
+            switch (answer) {
+                case AddNew:
+                    this.createItem(input, tracker);
 
-            case ShowAll:
-                this.getAllItems(input,tracker);
+                case ShowAll:
+                    this.getAllItems(tracker);
 
-            case EditItem:
-                this.editItem(input,tracker);
+                case EditItem:
+                    this.editItem(input, tracker);
 
-            case DeleteItem:
-                this.deleteItem(input,tracker);
+                case DeleteItem:
+                    this.deleteItem(input, tracker);
 
-            case FindById:
-                this.findItemById(input,tracker);
+                case FindById:
+                    this.findItemById(input, tracker);
 
-            case FindByName:
-                this.findItemByName(input,tracker);
+                case FindByName:
+                    this.findItemByName(input, tracker);
 
-            case EXIT:
-                System.out.println("I quit");
+                case EXIT:
+                    i = false;
+                    System.out.println("I quit");
+                    break;
+
+            }
         }
     }
 
+
     public static void main(String[] args) {
-        new StartUI().init();
+        //ConsoleInput input = new ConsoleInput();
+        Tracker tracker = new Tracker();
+        Input input = new StubInput(new String[] {"create stub task"});
+        new StartUI(input, tracker).init();
     }
 }
