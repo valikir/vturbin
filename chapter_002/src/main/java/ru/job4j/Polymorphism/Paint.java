@@ -6,7 +6,7 @@ package ru.job4j.Polymorphism;
 public class Paint {
 
     public void draw(Shape shape){
-    System.out.println(shape);
+    System.out.println(shape.pic());
     }
 
 }
