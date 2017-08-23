@@ -1,6 +1,9 @@
 package ru.job4j.Encapsulation;
 
 import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * item class.
@@ -13,14 +16,22 @@ import java.util.Arrays;
 public class Tracker {
     private Item[] items= new Item[100];
     private int position = 0;
+    private static int Id = 1;
 
     public Item add(Item item) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate localDate = LocalDate.now();
+        item.setCreated(Long.valueOf(dtf.format(localDate)));
+        item.setId(String.valueOf(Id++));
        this.items[position++] = item;
        return item;
     }
     public void update(Item updateItem) {
         for (int i=0; i < this.items.length; i++) {
             if (this.items[i].getId().equals(updateItem.getId())) {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+                LocalDate localDate = LocalDate.now();
+                updateItem.setCreated(Long.valueOf(dtf.format(localDate)));
                 this.items[i] = updateItem;
                 break;
             }
