@@ -70,6 +70,14 @@ public class MenuTracker  {
     private Tracker tracker;
     private UserAction[] actions = new UserAction[8];
 
+    public int[] actionCount(){
+        int[] count = new int[actions.length];
+        for (int index = 0; index < this.actions.length; index++) {
+            count[index] = index;
+        }
+        return count;
+    }
+
     public MenuTracker(Input input, Tracker tracker){
         this.input = input;
         this.tracker = tracker;
