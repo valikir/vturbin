@@ -1,12 +1,17 @@
 package ru.job4j.Innerclass;
 
+import ru.job4j.AbstractClasses.*;
 import ru.job4j.Polymorphism.*;
 import ru.job4j.Encapsulation.*;
 
 import java.util.Arrays;
 
 
-class EditItem implements UserAction {
+class EditItem extends BaseAction {
+    EditItem(String name, int key) {
+        super(name, key);
+    }
+
     public int key(){
         return 3;
     }
@@ -20,15 +25,15 @@ class EditItem implements UserAction {
         comments[0] = input.ask("Enter new comments: ");
         Item item = new Item(id, name, desc,0, comments);
         tracker.update(item);
-
-    }
-    @Override
-    public String info() {
-        return String.format("%s. %s",this.key(),"Edit item");
     }
 }
 
-class FindByName implements UserAction {
+class FindByName extends BaseAction {
+
+    FindByName(String name, int key) {
+        super(name, key);
+    }
+
     public int key() {
         return 6;
     }
@@ -36,32 +41,25 @@ class FindByName implements UserAction {
     @Override
     public void execute(Input input, Tracker tracker) {
         String name = input.ask("Please enter task's name: ");
-        //Item item = new Item(null, name, null,0, null);
         for (Item item : tracker.findByName(name)) {
             if (item != null) {
                 System.out.println(String.format("Id: %s Name: %s Description: %s Date Created: %s Comments: %s", item.getId(), item.getName(), item.getDesc(), item.getCreated(), Arrays.toString(item.getComments())));
             }
         }
     }
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find items by name");
-        }
 }
 
-class ExitProgram implements UserAction {
+class ExitProgram extends BaseAction {
+    ExitProgram(String name, int key) {
+        super(name, key);
+    }
     public int key() {
         return 7;
     }
-
     @Override
     public void execute(Input input, Tracker tracker) {
                 System.out.println("Please confirm");
         }
-    @Override
-    public String info() {
-        return String.format("%s. %s", this.key(), "Exit Program");
-    }
 }
 
 public class MenuTracker  {
@@ -83,13 +81,13 @@ public class MenuTracker  {
         this.tracker = tracker;
     }
     public void fillActions() {
-        this.actions[1] = this.new AddItem();  // нестатический  внутренний класс
-        this.actions[2] = new MenuTracker.ShowItems(); // статический  внутренний класс
-        this.actions[3] = new EditItem();  // внешний класс
-        this.actions[4] = new MenuTracker.DeleteItem(); // статический  внутренний класс
-        this.actions[5] = this.new FindById(); // нестатический  внутренний класс
-        this.actions[6] = new FindByName(); // внешний класс
-        this.actions[7] = new ExitProgram(); // внешний класс
+        this.actions[1] = this.new AddItem("Add new item",1);  // нестатический  внутренний класс
+        this.actions[2] = new MenuTracker.ShowItems("Show all items",2); // статический  внутренний класс
+        this.actions[3] = new EditItem("Edit item",3);  // внешний класс
+        this.actions[4] = new MenuTracker.DeleteItem("Delete item",4); // статический  внутренний класс
+        this.actions[5] = this.new FindById("Find item by Id",5); // нестатический  внутренний класс
+        this.actions[6] = new FindByName("Find items by name",6); // внешний класс
+        this.actions[7] = new ExitProgram("Exit Program",7); // внешний класс
     }
 
     public void select(int key) {
@@ -103,7 +101,11 @@ public class MenuTracker  {
             }
         }
     }
-    private class AddItem implements UserAction {
+    private class AddItem extends BaseAction {
+
+        AddItem(String name, int key) {
+            super(name, key);
+        }
 
         public int key(){
             return 1;
@@ -117,13 +119,12 @@ public class MenuTracker  {
         comments[0] = input.ask("Enter comments: ");
         tracker.add(new Item(null, name, desc,0, comments));
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s",this.key(),"Add new item");
-        }
     }
-    private static class ShowItems implements UserAction {
+    private static class ShowItems extends BaseAction {
+
+        ShowItems(String name, int key) {
+            super(name, key);
+        }
 
         public int key(){
             return 2;
@@ -137,14 +138,13 @@ public class MenuTracker  {
             }
         }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s",this.key(),"Show all items");
-        }
     }
 
-    private static class DeleteItem implements UserAction {
+    private static class DeleteItem extends BaseAction {
+
+        DeleteItem(String name, int key) {
+            super(name, key);
+        }
 
         public int key(){
             return 4;
@@ -159,14 +159,13 @@ public class MenuTracker  {
             Item deleteItem = new Item(ItemSelect,null,null,0,null);
             tracker.delete(deleteItem);
             }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s",this.key(),"Delete item");
-        }
     }
 
-    private class FindById implements UserAction {
+    private class FindById extends BaseAction {
+
+        public FindById(String name, int key) {
+            super(name, key);
+        }
 
         public int key(){
             return 5;
@@ -178,11 +177,6 @@ public class MenuTracker  {
             Item item;
             item = tracker.findById(ItemSelect);
             System.out.println(String.format("Id: %s Name: %s Description: %s Date Created: %s Comments: %s", item.getId(), item.getName(), item.getDesc(), item.getCreated(), Arrays.toString(item.getComments())));
-        }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s",this.key(),"Find item by Id");
         }
     }
 }
