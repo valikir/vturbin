@@ -25,8 +25,10 @@ public class ConvertList {
         int row = 0;
         int elementInRow=0;
         for (Integer i : list) {
-            rowArray[row][elementInRow] = i;
-            elementInRow++;
+            if (i != null) {
+                rowArray[row][elementInRow] = i;
+                elementInRow++;
+            }
             if (elementInRow == elements){
                 row++;
                 elementInRow=0;
