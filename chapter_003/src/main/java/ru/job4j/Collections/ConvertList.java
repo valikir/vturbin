@@ -25,10 +25,13 @@ public class ConvertList {
         int row = 0;
         int elementInRow=0;
         for (Integer i : list) {
-            if (i != null) {
-                rowArray[row][elementInRow] = i;
+            if (i == null) {
+                rowArray[row][elementInRow] = 0;
                 elementInRow++;
-            }
+            } else {
+                    rowArray[row][elementInRow] = i;
+                    elementInRow++;
+                }
             if (elementInRow == elements){
                 row++;
                 elementInRow=0;
@@ -40,8 +43,7 @@ public class ConvertList {
     public static void main(String[] args){
         ConvertList convert = new ConvertList();
         int[][] array = {{1,2,3,4},{5,6,7}};
-        List<Integer> rowList;
-        rowList = convert.toList(array);
+        List<Integer> rowList = convert.toList(array);
         int[][] toArray = convert.toArray(rowList, 3);
         System.out.println(Arrays.deepToString(toArray));
     }
