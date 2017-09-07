@@ -4,7 +4,10 @@ import ru.job4j.AbstractClasses.*;
 import ru.job4j.Polymorphism.*;
 import ru.job4j.Encapsulation.*;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 class EditItem extends BaseAction {
@@ -66,12 +69,19 @@ public class MenuTracker  {
 
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[8];
+    //private UserAction[] actions = new UserAction[8];
+    private List<UserAction> actions=  new ArrayList<>();
 
     public int[] actionCount(){
-        int[] count = new int[actions.length];
-        for (int index = 0; index < this.actions.length; index++) {
-            count[index] = index;
+ //       int[] count = new int[actions.length];
+ //       for (int index = 0; index < this.actions.length; index++) {
+ //           count[index] = index;
+ //       }
+ //       return count;
+        //Using ArrayLists
+        int[] count = new int[actions.size()];
+        for (UserAction action : actions ){
+            count[actions.indexOf(action)] = actions.indexOf(action);
         }
         return count;
     }
@@ -81,17 +91,17 @@ public class MenuTracker  {
         this.tracker = tracker;
     }
     public void fillActions() {
-        this.actions[1] = this.new AddItem("Add new item",1);  // нестатический  внутренний класс
-        this.actions[2] = new MenuTracker.ShowItems("Show all items",2); // статический  внутренний класс
-        this.actions[3] = new EditItem("Edit item",3);  // внешний класс
-        this.actions[4] = new MenuTracker.DeleteItem("Delete item",4); // статический  внутренний класс
-        this.actions[5] = this.new FindById("Find item by Id",5); // нестатический  внутренний класс
-        this.actions[6] = new FindByName("Find items by name",6); // внешний класс
-        this.actions[7] = new ExitProgram("Exit Program",7); // внешний класс
+       /* this.actions[1] */ actions.add( this.new AddItem("Add new item",1));  // нестатический  внутренний класс
+       /* this.actions[2] */ actions.add( new MenuTracker.ShowItems("Show all items",2)); // статический  внутренний класс
+       /* this.actions[3] */ actions.add( new EditItem("Edit item",3));  // внешний класс
+       /* this.actions[4] */ actions.add( new MenuTracker.DeleteItem("Delete item",4)); // статический  внутренний класс
+       /* this.actions[5] */ actions.add( this.new FindById("Find item by Id",5)); // нестатический  внутренний класс
+        /* this.actions[6]*/ actions.add( new FindByName("Find items by name",6)); // внешний класс
+       /* this.actions[7] */ actions.add( new ExitProgram("Exit Program",7)); // внешний класс
     }
 
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        actions.get(key-1).execute(this.input, this.tracker);
     }
 
     public void show() {
