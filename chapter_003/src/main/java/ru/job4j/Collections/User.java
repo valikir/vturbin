@@ -28,18 +28,45 @@ static class SortUser{
            userSet.addAll(users);
            return userSet;
         }
+        public List<User> sortNameLength (List<User> users){
+           users.sort(
+                    new Comparator<User>() {
+                        @Override
+                        public int compare(User o1, User o2) {
+                           return Integer.compare(o1.name.length(),o2.name.length()) ;
+                        }
+                    }
+            );
+           return users;
+        }
+        public List<User> sortByAllFields (List<User> users){
+            users.sort(
+                    new Comparator<User>() {
+                        @Override
+                        public int compare(User o1, User o2) {
+                            final int compareName = o1.name.compareTo(o2.name);
+                            return compareName != 0 ? compareName : o1.compareTo(o2);
+                        }
+                    }
+            );
+            return users;
+        }
 }
     public static void main(String[] args) {
         List<User> users = new ArrayList<>();
         users.addAll(
                 Arrays.asList(
-                        new User(1, "Uasja", 14, "Astana"),
+                        new User(1, "Evgenij", 14, "Astana"),
                         new User(2, "Ashot", 12, "Ufa"),
-                        new User(3, "Evgenij", 13, "Praga")
+                        new User(2, "Ashot", 22, "Ufa"),
+                        new User(3, "Tim", 13, "Praga"),
+                        new User(3, "Tim", 18, "Praga")
                 )
         );
         SortUser sortUser = new SortUser();
         System.out.println(sortUser.sort(users).toString());
+        System.out.println(sortUser.sortNameLength(users).toString());
+        System.out.println(sortUser.sortByAllFields(users).toString());
         }
     }
 
