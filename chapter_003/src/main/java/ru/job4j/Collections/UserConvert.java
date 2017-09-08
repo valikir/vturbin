@@ -12,9 +12,9 @@ public class UserConvert {
     }
 
     public static void main (String[] args){
-        User user1 = new User(1,"Uasja","Astana");
-        User user2 = new User(2,"Ashot","Ufa");
-        User user3 = new User(3, "Evgenij","Praga");
+        User user1 = new User(1,"Uasja",12,"Astana");
+        User user2 = new User(2,"Ashot",14,"Ufa");
+        User user3 = new User(3, "Evgenij",15,"Praga");
 
         UserConvert userConv = new UserConvert();
         List<User> list = new ArrayList<>();

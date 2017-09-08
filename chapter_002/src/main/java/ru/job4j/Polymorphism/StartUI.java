@@ -68,8 +68,8 @@ public class StartUI {
 
     public void findItemByName(Input input,Tracker tracker){
         String ItemName = input.ask("Enter item id: ");
-        Item[] itemsName = tracker.findByName(ItemName);
-        System.out.println(itemsName);
+     //   Item[] itemsName = tracker.findByName(ItemName);
+     //   System.out.println(itemsName);
     }
 
     public void init() {
@@ -124,9 +124,10 @@ public class StartUI {
 
 
     public static void main(String[] args) {
-        //ConsoleInput input = new ConsoleInput();
+       // Input input = new ConsoleInput();
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[] {"create stub task"});
         new StartUI(input, tracker).init();
+       // new StartUI(input).init();
     }
 }
