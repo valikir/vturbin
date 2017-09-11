@@ -1,6 +1,7 @@
 package ru.job4j.Collections;
 import java.util.*;
 
+
 public class UserNew {
     private String name;
     private String passport;
@@ -36,17 +37,6 @@ public class UserNew {
                 '}';
     }
 
-    static List<UserNew> bankUsers = new ArrayList<>();
-    static List<Account> AccountList = new LinkedList<>();
-
-
-    public void addUser(UserNew user){
-        bankUsers.add(user);
-    }
-    public void deleteUser(UserNew user){
-        bankUsers.remove(user);
-    }
-
     static class Account {
         private double value;
         private String requisites;
@@ -55,53 +45,124 @@ public class UserNew {
             this.value = value;
             this.requisites = requisites;
         }
+    }
 
-        static Map<UserNew, List<Account>> userAccounts = new HashMap<>();
+    static class Bank{
 
-        public static void addAccountToUser(UserNew user,Account account){
-            AccountList.add(account);
-            userAccounts.put(user,AccountList);
+        @Override
+        public String toString() {
+            return "UserNew{" +
+                    "userAccounts='" + userAccounts + '}';
         }
+        Map<UserNew, List<Account>> userAccounts = new HashMap<>();
+
+        // Add user with empty account
+        public void addUser(UserNew user){
+        userAccounts.put(user, new LinkedList<>());
+        }
+
+        // Delete User if found
+        public void deleteUser(UserNew user){
+                if (userAccounts.containsKey(user)) {
+                    userAccounts.remove(user);
+                } else{
+                System.out.println("No such user found");
+            }
+        }
+
+        //Add account to user
+        public  void addAccountToUser(UserNew user,Account account){
+            userAccounts.get(user).add(account);
+            List<Account> accounts = userAccounts.get(user);
+            userAccounts.put(user, accounts);
+        }
+
+        //Remove Account from user by rewriting Hashmap value for object user
         public void deleteAccountFromUser(UserNew user,Account account){
-            AccountList.remove(account);
-            userAccounts.remove(user, AccountList);
+            List<Account> accounts = userAccounts.get(user);
+            for (Account acc : accounts){
+                if (acc.equals(account)){
+                    accounts.remove(acc);
+                    break;
+                } else {
+                    System.out.println("No such account found");
+                }
+            }
+            userAccounts.put(user, accounts);
         }
+
+        // Get user accounts
         public List<Account> getUserAccounts(UserNew user){
             List<Account> accounts = userAccounts.get(user);
             return accounts;
         }
+
+        // Transfer money from one account to another
         public boolean transferMoney(UserNew srcUser, Account srcAccount, UserNew dstUser,
                                      Account dstAccount, double amount) {
             boolean transferComplete = false;
-            if (srcAccount.value >= amount & userAccounts.containsKey(dstUser) & userAccounts.containsValue(AccountList)) {
-                srcAccount.value = srcAccount.value - amount;
-                dstAccount.value = dstAccount.value + amount;
-                transferComplete = true;
+            boolean dstUserAndAccountMatch =false;
+            for (Account acc : userAccounts.get(dstUser)){
+                if (acc.equals(dstAccount)){
+                    dstUserAndAccountMatch = true;
+                    break;
+                }
             }
+            for (Account acc : userAccounts.get(srcUser)){
+                if (dstUserAndAccountMatch && acc.equals(srcAccount) && acc.value >= amount ){
+                        acc.value = acc.value - amount;
+                        break;
+                }
+            }
+            for (Account acc : userAccounts.get(dstUser)){
+                if (acc.equals(dstAccount)){
+                    acc.value = acc.value + amount;
+                    transferComplete = true;
+                    break;
+                }
+            }
+
             return transferComplete;
         }
-
     }
 
     public static void main(String[] args){
-    UserNew user1 = new UserNew("Uasja","LMK20003");
-    UserNew user2 = new UserNew("Olga","LOK20004");
-    UserNew user3 = new UserNew("Tom","DKK20001");
-    user1.addUser(user1);
-    user2.addUser(user2);
-    user3.addUser(user3);
-    System.out.println(bankUsers);
-    Account account1 = new Account(200,"KROT");
-    Account account2 = new Account(300,"LISA");
-    Account account3 = new Account(400,"VOLK");
-    Account account4 = new Account(500,"KOT");
-    Account account5 = new Account(600, "KOROVA");
-    Account.addAccountToUser(user1,account1);
-    Account.addAccountToUser(user1,account2);
-    Account.addAccountToUser(user1,account3);
-    Account.addAccountToUser(user2,account4);
-    Account.addAccountToUser(user3,account5);
-    System.out.println(Account.userAccounts);
+        Bank sberbank = new Bank();
+
+        //Create 3 users
+        UserNew user1 = new UserNew("Uasja","LMK20003");
+        UserNew user2 = new UserNew("Olga","LOK20004");
+        UserNew user3 = new UserNew("Tom","DKK20001");
+
+        //Create 5 Accounts
+        Account account1 = new Account(200,"KROT");
+        Account account2 = new Account(300,"LISA");
+        Account account3 = new Account(400,"VOLK");
+        Account account4 = new Account(500,"KOT");
+        Account account5 = new Account(600, "KOROVA");
+
+        sberbank.addUser(user1);
+        sberbank.addUser(user2);
+        sberbank.addUser(user3);
+        sberbank.addAccountToUser(user1,account1);
+        sberbank.addAccountToUser(user1,account2);
+        sberbank.addAccountToUser(user1,account3);
+        sberbank.addAccountToUser(user2,account4);
+        sberbank.addAccountToUser(user3,account5);
+        //User accounts after adding users and accounts
+        System.out.println(sberbank.userAccounts);
+
+        sberbank.deleteAccountFromUser(user1,account1);
+        //User accounts after deleting account from user1
+        System.out.println(sberbank.userAccounts);
+
+        sberbank.deleteUser(user2);
+        //User accounts after deleting user2
+        System.out.println(sberbank.userAccounts);
+
+        //Get accounts from user1
+        System.out.println(sberbank.getUserAccounts(user1));
+
 
     }
 }
