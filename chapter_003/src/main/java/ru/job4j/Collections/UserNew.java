@@ -38,14 +38,21 @@ public class UserNew {
     }
 
     static class Account {
+
         private double value;
         private String requisites;
 
         Account(double value, String requisites) {
             this.value = value;
             this.requisites = requisites;
+
+        }
+        @Override
+        public String toString(){
+            return "Account{" + "requisites: " + requisites + " value: " + value + "}" ;
         }
     }
+
 
     static class Bank{
 
@@ -102,6 +109,7 @@ public class UserNew {
                                      Account dstAccount, double amount) {
             boolean transferComplete = false;
             boolean dstUserAndAccountMatch =false;
+            boolean srcAccountValid = false;
             for (Account acc : userAccounts.get(dstUser)){
                 if (acc.equals(dstAccount)){
                     dstUserAndAccountMatch = true;
@@ -109,13 +117,18 @@ public class UserNew {
                 }
             }
             for (Account acc : userAccounts.get(srcUser)){
-                if (dstUserAndAccountMatch && acc.equals(srcAccount) && acc.value >= amount ){
+                if (userAccounts.get(srcUser).contains(acc) && dstUserAndAccountMatch && acc.equals(srcAccount) && acc.value >= amount){
                         acc.value = acc.value - amount;
+                        srcAccountValid = true;
                         break;
+                }
+                else {
+                    System.out.println("Invalid source account number or not enough money on account");
+                    break;
                 }
             }
             for (Account acc : userAccounts.get(dstUser)){
-                if (acc.equals(dstAccount)){
+                if (acc.equals(dstAccount) && srcAccountValid){
                     acc.value = acc.value + amount;
                     transferComplete = true;
                     break;
@@ -163,7 +176,15 @@ public class UserNew {
         //Get accounts from user1
         System.out.println(sberbank.getUserAccounts(user1));
 
+        //Transfer Money from user 1 to user 3 from non-existing account
+        sberbank.transferMoney(user1, account1, user3, account5, 300);
+        System.out.println(sberbank.getUserAccounts(user3));
+        System.out.println(sberbank.getUserAccounts(user1));
 
+        //Transfer Money from user 1 to user 3 from existing account
+        sberbank.transferMoney(user1, account2, user3, account5, 300);
+        System.out.println(sberbank.getUserAccounts(user3));
+        System.out.println(sberbank.getUserAccounts(user1));
     }
 }
 
