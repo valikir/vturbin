@@ -1,6 +1,7 @@
 package ru.iterators;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class IteratorEvenNumbers implements Iterator {
 
@@ -17,6 +18,9 @@ public class IteratorEvenNumbers implements Iterator {
         int count = 0 + index;
         while (count < numbers.length){
             result = numbers[count++] % 2 == 0 ? true : false;
+            if (result == true) {
+                break;
+            }
         }
         return result;
     }
@@ -30,6 +34,9 @@ public class IteratorEvenNumbers implements Iterator {
                 break;
             } else {
                 index++;
+            }
+            if (result == -1 && index == numbers.length){
+                throw new NoSuchElementException();
             }
         }
             return result;
