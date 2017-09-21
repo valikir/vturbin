@@ -8,6 +8,7 @@ public class IteratorArray implements Iterator{
     private int indexRow = 0;
     private int indexCol = 0;
     private int result = 0;
+    private int k = 0; // Array dimensions
 
     public IteratorArray(final int[][] values) {
         this.values = values;
@@ -15,19 +16,27 @@ public class IteratorArray implements Iterator{
 
     @Override
     public boolean hasNext() {
-        return values.length > indexCol && values[0].length > indexRow;
+        return values[k].length >= indexCol && (values[k].length >= indexCol+1 || values.length > k+1);
     }
 
     @Override
     public Object next() {
-        if (indexCol < values.length){
-            result = values[indexRow][indexCol++];
-        }
-        else{
-            indexCol = 0;
-            result = values[++indexRow][indexCol++];
-        }
+            try {
+                if (indexCol < values[k].length) {
+                    result = values[indexRow][indexCol++];
+                }
+             else {
+                indexCol = 0;
+                k++;
+                indexRow++;
+                next();
+            }
+            }catch (RuntimeException e) {
+                throw new NoSuchElementException();
+            }
+
         return result;
     }
+
 
 }
