@@ -2,6 +2,8 @@ package ru.iterators;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -29,6 +31,10 @@ public class PrimeItTest {
 
         boolean result4 = it.hasNext();
         assertThat(result4, is(false));
+
+     //   int result6 = (Integer) it.next();
+     //   assertThat(result6, is(new NoSuchElementException()));
+
     }
 
 }

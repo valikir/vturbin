@@ -1,6 +1,7 @@
 package ru.iterators;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class PrimeIt implements Iterator {
 
@@ -35,6 +36,9 @@ public class PrimeIt implements Iterator {
                 break;
             } else {
                 index++;
+            }
+            if (result == -1 && index == numbers.length){
+                throw new NoSuchElementException();
             }
         }
         return result;
