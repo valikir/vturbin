@@ -16,12 +16,13 @@ public class PrimeIt implements Iterator {
     @Override
     public boolean hasNext() {
         boolean result = false;
-        int count = 0 + index;
-        while (count < numbers.length){
-            result = ((numbers[count] % 3 != 0) && (numbers[count] % 2 != 0) || (numbers[count] == 3) )? true : false;
-            count++;
+        while (index < numbers.length){
+            result = ((numbers[index] % 3 != 0) && (numbers[index] % 2 != 0) || (numbers[index] == 3) )? true : false;
             if (result == true) {
                 break;
+            }
+            else{
+                index++;
             }
         }
         return result;
@@ -30,14 +31,11 @@ public class PrimeIt implements Iterator {
     @Override
     public Object next() {
         int result = -1;
-        while (index < numbers.length) {
-            if ((numbers[index] % 3 != 0) && (numbers[index] % 2 != 0) || (numbers[index] ==3) ) {
+        while (index <= numbers.length) {
+            if (hasNext() ) {
                 result = numbers[index++];
                 break;
             } else {
-                index++;
-            }
-            if (result == -1 && index == numbers.length){
                 throw new NoSuchElementException();
             }
         }
