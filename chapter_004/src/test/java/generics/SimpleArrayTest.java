@@ -1,6 +1,7 @@
 package generics;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -27,7 +28,7 @@ public class SimpleArrayTest {
         simple.delete(0);
         String result = simple.get(0);
 
-        assertThat(result, is("null"));
+        assertThat(result, is(IsNull.nullValue()));
     }
 
     @Test
