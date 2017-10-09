@@ -30,15 +30,12 @@ public class PrimeIt implements Iterator {
 
     @Override
     public Object next() {
-        int result = -1;
-        while (index <= numbers.length) {
+        int result;
             if (hasNext() ) {
                 result = numbers[index++];
-                break;
             } else {
                 throw new NoSuchElementException();
             }
-        }
         return result;
     }
 }
