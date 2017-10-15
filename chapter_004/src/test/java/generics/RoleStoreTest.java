@@ -34,7 +34,7 @@ public class RoleStoreTest {
 
         roleStore.add( newRole );
         roleStore.add( newRole2 );
-       Role updaterole =  roleStore.update( newRole2 );
+       Role updaterole =  (Role) roleStore.update( newRole2 );
         assertThat(roleStore.roleStore.get( 0 ),is(newRole));
         assertThat(roleStore.roleStore.get( 1 ),is(updaterole));
     }
@@ -48,8 +48,8 @@ public class RoleStoreTest {
         Role newRole2 = new Role();
         newRole2.setId( "14" );
 
-        Role role1 = roleStore.add( newRole );
-        Role role2 = roleStore.add( newRole2 );
+        Role role1 = (Role) roleStore.add( newRole );
+        Role role2 = (Role) roleStore.add( newRole2 );
         System.out.println(role1.getId());
         System.out.println(role2.getId());
         roleStore.delete( "14" );

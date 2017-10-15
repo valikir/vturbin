@@ -9,13 +9,13 @@ public class UserStore implements Store {
     int index = 0;
 
     @Override
-    public User add(Base model) {
+    public Base add(Base model) {
         roleStore.add(model);
         return (User) roleStore.get(index++);
     }
 
     @Override
-    public User update(Base model) {
+    public Base update(Base model) {
         int count=0;
         while (roleStore.get( count )!= model){
             count++;

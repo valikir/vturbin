@@ -1,6 +1,6 @@
 package generics;
 
-public class Base {
+public abstract class Base {
     private String id;
 
     void setId(String id){

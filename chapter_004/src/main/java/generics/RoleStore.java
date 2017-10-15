@@ -9,13 +9,13 @@ public class RoleStore implements Store {
     int index = 0;
 
     @Override
-    public Role add(Base model) {
+    public Base add(Base model) {
         roleStore.add(model);
         return (Role) roleStore.get(index++);
     }
 
     @Override
-    public Role update(Base model) {
+    public Base update(Base model) {
         int count=0;
        while (roleStore.get( count )!= model){
             count++;
