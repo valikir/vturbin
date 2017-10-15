@@ -10,28 +10,25 @@ public class Converter {
         return new Iterator<Integer>  () {
             Iterator<Integer> n = it.next();
             Integer cursor;
-            Integer nextValue;
 
             @Override
             public boolean hasNext() {
-                return nextValue != null || it.hasNext();
+                return n.hasNext() || it.hasNext();
             }
 
             @Override
             public Integer next() {
-                try {
+                if (!hasNext()){
+                    throw new NoSuchElementException();
+                }
+                if (n.hasNext()) {
                     cursor = n.next();
-                    nextValue = cursor;
-                } catch (NoSuchElementException e) {
+                }
+                else{
                     n = it.next();
                     cursor = n.next();
                 }
                 Value = cursor;
-                try {
-                    nextValue = n.next();
-                } catch (NoSuchElementException e) {
-                    nextValue = null;
-                }
                 return Value;
             }
         };
