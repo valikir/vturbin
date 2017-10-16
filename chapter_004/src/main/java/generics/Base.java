@@ -3,7 +3,7 @@ package generics;
 public abstract class Base {
     private String id;
 
-    void setId(String id){
+    public void setId(String id){
         this.id = id;
     }
 
