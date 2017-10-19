@@ -1,26 +1,35 @@
 package list;
 
+import sun.awt.image.ImageWatched;
+
+import javax.xml.soap.Node;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 public class SimpleQueue<E> implements StackContainer {
 
-    LinkedList<E> queueList = new LinkedList<>( );
-    int index = 0;
-    int queue = 0;
+    LinkedListContainer<Integer> container = new LinkedListContainer<>();
+
+    void removeFirst(){
+        final LinkedListContainer.Node next = container.first.next;
+        container.first = null;
+        container.first = next;
+        if (next == null)
+            container.last = null;
+        else
+            next.prev = null;
+        container.size--;
+    }
 
     @Override
-    public Object poll() {
-        if (queueList.isEmpty()){
-            throw new NoSuchElementException(  );
-        }
-        queueList.remove( queue );
-        return queueList;
+    public E poll() {
+        final LinkedListContainer.Node f = container.first;
+        removeFirst();
+        return (f == null) ? null : (E) f.item;
     }
 
     @Override
     public void push(Object value) {
-        queueList.add((E) value );
-        index++;
+        container.add( value );
     }
 }
