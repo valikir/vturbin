@@ -1,23 +1,81 @@
 package list;
 
 import java.util.Iterator;
-import java.util.*;
 import java.util.NoSuchElementException;
 
 public class LinkedListContainer<E> implements DynamicContainer {
 
-    List<E> container = new LinkedList<E>();
-    int index = 0;
+    int size = 0;
+
+    static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
+    Node<E> first;
+    Node<E> last;
+
+    private void linkFirst(E e) {
+        final Node<E> f = first;
+        final Node<E> newNode = new Node<>( null, e, f );
+        first = newNode;
+        if (f == null)
+            last = newNode;
+        else
+            f.prev = newNode;
+    }
+
+    void linkLast(E e) {
+        final Node<E> l = last;
+        final Node<E> newNode = new Node<>( l, e, null );
+        last = newNode;
+        if (l == null)
+            first = newNode;
+        else
+            l.next = newNode;
+    }
+
+    Node<E> node(int index) {
+        // assert isElementIndex(index);
+
+        if (index < size) {
+            Node<E> x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+            return x;
+        } else {
+            Node<E> x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+            return x;
+        }
+    }
+
+
+  //  List<E> container = new LinkedList<E>();
+
 
     @Override
     public void add(Object value) {
-        container.add( (E) value );
-        index++;
+        if (first == null){
+            linkFirst((E) value );
+        }
+        else {
+            linkLast( (E) value );
+        }
+        size++;
     }
 
     @Override
-    public Object get(int index) {
-        return container.get( index );
+    public E get(int index) {
+        return node( index ).item;
     }
 
     @Override
@@ -27,19 +85,18 @@ public class LinkedListContainer<E> implements DynamicContainer {
 
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
-        int lastRet = -1; // index of last element returned; -1 if no such
 
         public boolean hasNext() {
-            return cursor < index;
+            return cursor < size;
         }
 
         public E next() {
             int i = cursor;
-            if (i >= index)
+            if (i >= size)
                 throw new NoSuchElementException();
-            List<E> data = container;
+            LinkedListContainer.Node<E> data = node( cursor );
             cursor = i + 1;
-            return data.get( lastRet=i );
+            return data.item;
         }
     }
 }

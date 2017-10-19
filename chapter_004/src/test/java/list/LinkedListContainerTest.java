@@ -24,8 +24,10 @@ public class LinkedListContainerTest {
         container.add( 10 );
         container.add( 11 );
         container.add( 12 );
-        int result = (int) container.get( 11 );
-        assertThat( result, is( 12 ) );
+
+        assertThat( container.get( 11 ), is( 12 ) );
+        assertThat( container.get( 0 ), is( 1 ) );
+        assertThat( container.get( 14 ), is( 12 ) );
     }
     @Test
     public void AddTwelveElementsIterateFunction(){
@@ -47,7 +49,7 @@ public class LinkedListContainerTest {
     public void AddStringShowString() {
         LinkedListContainer<String> container = new LinkedListContainer<>();
         container.add( "dog" );
-        String res = (String) container.get( 0 );
+       String res = container.get( 0 );
         assertThat( res, is("dog") );
 
     }
