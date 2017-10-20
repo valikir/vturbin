@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class SimpleSet2Test {
 
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void AddFourStringsExcludeOneDuplicate(){
         SimpleSet2<String> simpleset = new SimpleSet2<String>();
         simpleset.add( "first" );
@@ -19,12 +19,10 @@ public class SimpleSet2Test {
         simpleset.add( "third" );
         simpleset.add( "third" );
 
-        List<String> list = new LinkedList<>(  );
-        list.add( "first" );
-        list.add( "second" );
-        list.add( "third" );
-     //   System.out.println( simpleset.set);
-        assertThat( simpleset.set,is( list ) );
+       System.out.println( simpleset.get( 2 ));
+       System.out.println( simpleset.get( 3 ));
+       assertThat( simpleset.get( 2 ),is( "third" ) );
+       assertThat( simpleset.get( 3 ),is( new NullPointerException() ) );
 
     }
 
@@ -37,6 +35,7 @@ public class SimpleSet2Test {
         Iterator itr = simpleset.iterator();
         assertThat(itr.hasNext(),is(true));
         itr.next();
+        assertThat(itr.hasNext(),is(true));
         itr.next();
         String result = "third";
         assertThat( itr.next(),is( result ));
