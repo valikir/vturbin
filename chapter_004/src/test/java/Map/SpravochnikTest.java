@@ -10,28 +10,18 @@ import static org.junit.Assert.*;
 public class SpravochnikTest {
 
     @Test
-    public void AddThreeMapsOneDuplicateShowThree(){
-        Spravochnik spravochnik = new Spravochnik();
-        spravochnik.insert( "Andrej","9399848" );
-        spravochnik.insert( "Andrej","9399848" );
-        spravochnik.insert( "Zhenja","4885050" );
-        spravochnik.insert( "Anna", "8307530" );
-        String string = spravochnik.display();
-
-    }
-
-    @Test
     public void AddThreeMapsGetThreeValues() {
         Spravochnik spravochnik = new Spravochnik();
         spravochnik.insert( "Andrej", "9399848" );
         spravochnik.insert( "Zhenja", "4885050" );
         spravochnik.insert( "Anna", "8307530" );
+        spravochnik.insert( "Anna", "84325" );
         Object value = spravochnik.get( "Andrej" );
         Object value2 = spravochnik.get( "Zhenja" );
         Object value3 = spravochnik.get( "Anna" );
-        assertThat( "9399848", is( value ) );
-        assertThat( "4885050", is( value2 ) );
-        assertThat( "8307530", is( value3 ) );
+        assertThat( value, is( "9399848" ) );
+        assertThat( value2, is( "4885050") );
+        assertThat( value3, is( "84325") );
     }
 
     @Test
@@ -41,14 +31,18 @@ public class SpravochnikTest {
         spravochnik.insert( "Zhenja", "4885050" );
         spravochnik.insert( "Anna", "8307530" );
         Iterator itr = spravochnik.iterator();
+
         boolean hasnext = itr.hasNext();
-        Object object = itr.next();
-        itr.next();
-        itr.next();
-        boolean hasnext2 = itr.hasNext();
-        String string = "{Andrej=9399848}";
-        assertThat(object.toString(), is(string));
         assertThat(hasnext, is(true));
+
+        itr.next();
+        itr.next();
+        Object object = itr.next();
+        assertThat(object.toString(), is(spravochnik.last.toString()));
+
+        boolean hasnext2 = itr.hasNext();
         assertThat(hasnext2, is(false));
+
+
     }
 }
