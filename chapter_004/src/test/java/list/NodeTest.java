@@ -26,7 +26,6 @@ public class NodeTest {
         boolean hasCyc2 = first.hasCycle(four);
         assertThat(hasCyc2, is(true));
     }
-
     @Test
     public void FourNodesCheckLastNodePointToNull(){
         Node<Integer> first = new Node<>(1);

@@ -5,22 +5,25 @@ public class Node<T> {
     T value;
     Node<T> next;
 
-    public Node(T value){
+    public Node(T value) {
         this.value = value;
     }
 
-    boolean hasCycle(Node node){
-       int nodeRepCount=0;
-        Node n = next;
-       while (nodeRepCount!= 2) {
-           n = n.next;
-           if (n != null && node.value == n.value){
-               nodeRepCount++;
-           }
-           if (n == null){
-               return false;
-           }
-       }
-        return true;
+    boolean hasCycle(Node node) {
+        Object[] nodes = new Object[50];
+        int i = 1;
+        nodes[0] = node.value;
+        Node n = node.next;
+        while (n != null) {
+            nodes[i] = n.value;
+            for (int index = 0; index< i-1; index++) {
+                if (nodes[i].equals( nodes[index] ) && nodes[i] != null ) {
+                    return true;
+                }
+            }
+                n = n.next;
+                i++;
+        }
+        return false;
     }
 }
