@@ -8,10 +8,9 @@ import java.util.NoSuchElementException;
 
 public class Spravochnik<T,V> implements Structure<T,V> {
 
-    private int size = 100;
+    private int size = 128;
     public Node[] hashmap = new Node[size];
-    public Node last;
-    int tableLength = 100;
+    private  int modCount= 0;
 
     final int hash(T key) {
         int h;
@@ -28,20 +27,20 @@ public class Spravochnik<T,V> implements Structure<T,V> {
     @Override
     public boolean insert(T key, V value) {
         Node entry = new Node<>( hash( key ), key, value);
-        int ind = indexFor( hash( key ), tableLength );
+        int ind = indexFor( hash( key ), hashmap.length );
         if (hashmap[ind] != null && entry.hash == hashmap[ind].hash && (entry.key == hashmap[ind].key || entry.key.equals( hashmap[ind].key ))) {
             hashmap[ind].value = value;
             return true;
         }
         else {
             hashmap[ind] = entry;
-            last = entry;
+            modCount++;
         }
         return true;
     }
 
     final Node<T,V> getNode(int hash, T key) {
-        int ind = indexFor( hash, tableLength );
+        int ind = indexFor( hash, hashmap.length );
         if (hashmap[ind].hash == hash &&
                 ((hashmap[ind].key) == key || (key != null && key.equals( hashmap[ind].key ))))
             return hashmap[ind];
@@ -55,13 +54,12 @@ public class Spravochnik<T,V> implements Structure<T,V> {
 
     @Override
     public boolean delete(T key) {
-        for (int i = 0; i<hashmap.length ; i++){
-            if (hashmap != null && key.equals(hashmap[i].getKey())) {
-                hashmap[i] = null;
-                return true;
-            }
-            }
-            return false;
+        int ind = indexFor( hash(key), hashmap.length );
+        if (hashmap[ind] == getNode( hash( key ),key )){
+        hashmap[ind] = null;
+        }
+        modCount--;
+        return true;
     }
 
     @Override
@@ -70,30 +68,25 @@ public class Spravochnik<T,V> implements Structure<T,V> {
         private class Itr implements Iterator<T> {
             int cursor;       // index of next element to return
             int lastRet = 0; // index of last element returned; -1 if no such
+            int countNext = 0;
 
             @Override
             public final boolean hasNext() {
-                Node[] node = hashmap;
-                int lastNext = lastRet-1;
-                if (lastNext == -1){
-                    lastNext = lastRet ;
-                }
-                return node[lastNext] != last;
+               return countNext < modCount;
             }
 
             @Override
             public T next() {
                 if (cursor >= size)
                     throw new NoSuchElementException();
-                Node[] node = hashmap;
                 for(cursor = lastRet; cursor < size; cursor++){
-                    if (node[cursor] != null){
+                    if (hashmap[cursor] != null){
                         lastRet= cursor;
+                        countNext++;
                         break;
                     }
                 }
-
-                return (T) node[lastRet++];
+                return (T) hashmap[lastRet++];
             }
         }
 

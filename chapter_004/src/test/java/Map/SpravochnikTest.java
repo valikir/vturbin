@@ -38,8 +38,8 @@ public class SpravochnikTest {
         itr.next();
         itr.next();
         Object object = itr.next();
-        assertThat(object.toString(), is(spravochnik.last.toString()));
-
+        String string = "{Anna=8307530}";
+        assertThat(object.toString(), is(string));
         boolean hasnext2 = itr.hasNext();
         assertThat(hasnext2, is(false));
 
