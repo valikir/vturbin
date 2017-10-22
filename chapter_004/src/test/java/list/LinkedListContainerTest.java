@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class LinkedListContainerTest {
 
-    @Test
+    @Test (expected = NullPointerException.class)
     public void AddTwelveElementsShowTwelfth() {
         LinkedListContainer<Integer> container = new LinkedListContainer<>();
         container.add( 1 );
@@ -27,7 +27,7 @@ public class LinkedListContainerTest {
 
         assertThat( container.get( 11 ), is( 12 ) );
         assertThat( container.get( 0 ), is( 1 ) );
-        assertThat( container.get( 14 ), is( 12 ) );
+        assertThat( container.get( 14 ), is( new NullPointerException(  ) ) );
     }
     @Test
     public void AddTwelveElementsIterateFunction(){
