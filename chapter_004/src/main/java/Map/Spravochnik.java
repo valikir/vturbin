@@ -55,11 +55,12 @@ public class Spravochnik<T,V> implements Structure<T,V> {
     @Override
     public boolean delete(T key) {
         int ind = indexFor( hash(key), hashmap.length );
-        if (hashmap[ind] == getNode( hash( key ),key )){
-        hashmap[ind] = null;
+        if (hashmap[ind] != null) {
+            hashmap[ind] = null;
+            modCount--;
+            return true;
         }
-        modCount--;
-        return true;
+        return false;
     }
 
     @Override
