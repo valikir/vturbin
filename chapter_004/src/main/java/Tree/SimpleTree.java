@@ -1,4 +1,4 @@
-package Tree;
+package tree;
 
 public interface SimpleTree<E extends Comparable<E>> extends Iterable<E> {
     /**

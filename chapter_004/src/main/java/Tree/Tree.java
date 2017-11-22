@@ -1,6 +1,5 @@
 package tree;
 
-
 import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
@@ -12,6 +11,13 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
         public E getValue() {
             return value;
+        }
+
+        public boolean hasChildren() {
+            if (this.children.size() != 0) {
+                return true;
+            }
+            return false;
         }
 
         public Node(List<Node<E>> children, E value) {
@@ -59,6 +65,21 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return currentNode;
     }
 
+    public boolean isBinary() {
+            boolean binary=false;
+            Iterator itr = this.iterator();
+            while (itr.hasNext()){
+                Node currentNode = (Node) itr.next();
+                if (currentNode.children.size() == 2 || !currentNode.hasChildren()){
+                    binary = true;
+                    continue;
+                } else {
+                    binary = false;
+                    break;
+                }
+            }
+        return binary;
+    }
 
     @Override
     public boolean add(E parent, Node<E> child) {
