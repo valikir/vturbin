@@ -25,6 +25,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             this.children = children;
         }
     }
+
     Node<E> parent1 = new Node<E>(new ArrayList<>(), (E) "parent");
 
 
@@ -54,43 +55,43 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 index = parentNodes;
             }
             if (currentNode.children.size() > 1) {
-                duplicateCheck  = (Tree.Node) currentNode.children.get(index);
+                duplicateCheck = (Tree.Node) currentNode.children.get(index);
             } else if (currentNode.children.size() == 1) {
-                    duplicateCheck = (Tree.Node) currentNode.children.get(0);
-                }
-                if (duplicateCheck.value.equals(childValue)) {
-                    return null;
+                duplicateCheck = (Tree.Node) currentNode.children.get(0);
+            }
+            if (duplicateCheck.value.equals(childValue)) {
+                return null;
             }
         }
         return currentNode;
     }
 
     public boolean isBinary() {
-            boolean binary=false;
-            Iterator itr = this.iterator();
-            while (itr.hasNext()){
-                Node currentNode = (Node) itr.next();
-                if (currentNode.children.size() == 2 || !currentNode.hasChildren()){
-                    binary = true;
-                    continue;
-                } else {
-                    binary = false;
-                    break;
-                }
+        boolean binary = false;
+        Iterator itr = this.iterator();
+        while (itr.hasNext()) {
+            Node currentNode = (Node) itr.next();
+            if (currentNode.children.size() <= 2 || !currentNode.hasChildren()) {
+                binary = true;
+                continue;
+            } else {
+                binary = false;
+                break;
             }
+        }
         return binary;
     }
 
     @Override
     public boolean add(E parent, Node<E> child) {
         Node<E> addNode = searchNode(parent, child.value);
-       if (addNode != null) {
-           addNode.children.add(child);
-           child.prev = addNode;
-           return true;
-       } else {
-           return false;
-       }
+        if (addNode != null) {
+            addNode.children.add(child);
+            child.prev = addNode;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -98,12 +99,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         List nodes = new ArrayList<>();
         int index = 0;
         nodes.add(parent1);
-        if (parent1.children.size() > 0){
+        if (parent1.children.size() > 0) {
             for (Node node : parent1.children) {
                 nodes.add(node);
                 if (parent1.children.get(index).children != null) {
                     Iterator childIterator = parent1.children.get(index).children.iterator();
-                    while(childIterator.hasNext()){
+                    while (childIterator.hasNext()) {
                         nodes.add(childIterator.next());
                     }
                 }
