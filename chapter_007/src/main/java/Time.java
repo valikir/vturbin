@@ -2,21 +2,23 @@
 
 public class Time implements Runnable {
     public long start;
-    Thread t2;
+    public Thread thread;
 
-    public Time(long start, Thread t2) {
+    public Time(long start, Thread thread) {
         this.start = start;
-        this.t2 = t2;
+        this.thread = thread;
     }
 
     @Override
     public void run() {
         long elapsedTimeMillis = System.currentTimeMillis() - start;
-        if (elapsedTimeMillis > 1000) {
-            t2.interrupt();
+        while (elapsedTimeMillis < 1000 && thread.isAlive()) {
+            elapsedTimeMillis = System.currentTimeMillis() - start;
         }
-        elapsedTimeMillis = System.currentTimeMillis() - start;
-        System.out.println(elapsedTimeMillis);
+        if (elapsedTimeMillis >= 1000 && thread.isAlive()) {
+            thread.interrupt();
+        }
+         //   System.out.println(elapsedTimeMillis);
     }
 
     public static class CountChar implements Runnable {
@@ -29,11 +31,11 @@ public class Time implements Runnable {
         @Override
         public void run() {
             int length = text.length();
-            System.out.println("Text has " + length + " symbols");
-            if (Thread.currentThread().isInterrupted()) {
-                System.out.println("Time exceeds 1 second");
+            if (Thread.currentThread().isInterrupted()){
+                System.out.println("Quit program");
+                Runtime.getRuntime().exit(0);
             }
-
+            System.out.println("Text has " + length + " symbols");
         }
     }
 
@@ -49,8 +51,8 @@ public class Time implements Runnable {
             replicate++;
         }
         Thread t2 = new Thread(new CountChar(text));
-        t2.start();
         Thread t1 = new Thread(new Time(start, t2));
         t1.start();
+        t2.start();
     }
 }
