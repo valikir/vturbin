@@ -27,7 +27,6 @@ public class VisibilityProblem implements Runnable {
         Thread t1 = new Thread(new VisibilityProblem());
         Thread t2 = new Thread(new SecondThread());
         t1.start();
-        t1.join();
         t2.start();
         int adder = SharedObject.adder;
         System.out.println(adder);
