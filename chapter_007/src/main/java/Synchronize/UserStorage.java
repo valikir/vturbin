@@ -18,7 +18,7 @@ public class UserStorage {
         }
     }
 
-    public int get(int Id) {
+    synchronized public int get(int Id) {
         int count = 0;
         User userSearch = null;
         if (storage[count] != null) {
@@ -45,7 +45,7 @@ public class UserStorage {
         return true;
     }
 
-    boolean update(User user) {
+    synchronized boolean update(User user) {
         if (get(user.userId) == -1){
             return false;
         }
