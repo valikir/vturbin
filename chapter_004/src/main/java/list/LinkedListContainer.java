@@ -1,8 +1,11 @@
 package list;
 
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+@ThreadSafe
 public class LinkedListContainer<E> implements DynamicContainer<E> {
 
     int size = 0;
@@ -61,7 +64,7 @@ public class LinkedListContainer<E> implements DynamicContainer<E> {
 
 
     @Override
-    public void add(E value) {
+    synchronized public void add(E value) {
         if (first == null){
             linkFirst( value );
         }
@@ -72,7 +75,7 @@ public class LinkedListContainer<E> implements DynamicContainer<E> {
     }
 
     @Override
-    public E get(int index) {
+    synchronized public E get(int index) {
         return getNode( index ).item;
     }
 
@@ -81,14 +84,15 @@ public class LinkedListContainer<E> implements DynamicContainer<E> {
         return new LinkedListContainer.Itr();
     }
 
+    @ThreadSafe
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
 
-        public boolean hasNext() {
+        synchronized public boolean hasNext() {
             return cursor < size;
         }
 
-        public E next() {
+        synchronized public E next() {
             if (cursor >= size)
                 throw new NoSuchElementException();
             LinkedListContainer.Node<E> data = getNode( cursor );
