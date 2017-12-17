@@ -26,16 +26,18 @@ public class ParallelSearch implements Runnable {
     }
 
     synchronized private List<File> getAllSubDir() {
-        getSubDirectiories(directory);
-        int i = 0;
-        while (i < subdirs.size()) {
-            File file = subdirs.get(i);
-            getSubDirectiories(file);
-            i++;
-            //System.out.println(subdirs);
+        synchronized (subdirs) {
+            getSubDirectiories(directory);
+            int i = 0;
+            while (i < subdirs.size()) {
+                File file = subdirs.get(i);
+                getSubDirectiories(file);
+                i++;
+                //System.out.println(subdirs);
+            }
+            subdirs.add(directory);
+            return subdirs;
         }
-        subdirs.add(directory);
-        return subdirs;
     }
 
     synchronized private List<File> getSubDirectiories(File file) {
@@ -83,22 +85,24 @@ public class ParallelSearch implements Runnable {
 
     // result() пробегает по всем файлам из всех подпапок и сохраняет файлы с содержащим(заданным) текстом в листе foundfiles
     public List<String> result() {
-        int j = 0;
-        while (j < subdirs.size()) {
-            File f = subdirs.get(j);
-            String[] names = f.list();
-            if (names != null) {
-                for (String name : names) {
-                    File subdirfiles = new File(f + "/" + name);
-                    //System.out.println(subdirfiles);
-                    if (BrowseText(subdirfiles) != null) {
-                        foundfiles.add(subdirfiles.toString());
+        synchronized (subdirs) {
+            int j = 0;
+            while (j < subdirs.size()) {
+                File f = subdirs.get(j);
+                String[] names = f.list();
+                if (names != null) {
+                    for (String name : names) {
+                        File subdirfiles = new File(f + "/" + name);
+                        //System.out.println(subdirfiles);
+                        if (BrowseText(subdirfiles) != null) {
+                            foundfiles.add(subdirfiles.toString());
+                        }
                     }
                 }
+                j++;
             }
-            j++;
+            return foundfiles;
         }
-        return foundfiles;
     }
 
     // Данный поток запускает функцию getAllSubDir(), которая считает количество подпапок в заданной папке и сохраняет их в лист subdirs
@@ -112,11 +116,6 @@ public class ParallelSearch implements Runnable {
 
         @Override
         public void run() {
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             result();
             System.out.println(foundfiles);
         }
