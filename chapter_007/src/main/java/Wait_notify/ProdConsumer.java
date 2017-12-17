@@ -7,10 +7,9 @@ public class ProdConsumer {
     int value;
 
     private final int LIMIT = 100;
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
-    public void Produce() throws InterruptedException {
-        while (true) {
+    public void produce() throws InterruptedException {
             synchronized (lock) {
                 while (list.size() == LIMIT) {
                     System.out.println("Queue is full");
@@ -20,36 +19,42 @@ public class ProdConsumer {
                 System.out.println("value is: " + value);
                 lock.notify();
             }
-        }
     }
 
-    public void Consume() throws InterruptedException {
-        while (true) {
+    public void consume() throws InterruptedException {
             synchronized (lock) {
-                list.poll();
-                value--;
-                lock.notify();
                 while (list.size() == 0) {
                     System.out.println("Queue is empty");
                     lock.wait();
                 }
+                list.poll();
+                value--;
+                lock.notifyAll();
             }
-        }
     }
 
     public static void main(String[] args) {
         ProdConsumer prodConsumer = new ProdConsumer();
+
     new Thread(() -> {
+        int i=0;
         try {
-            prodConsumer.Produce();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            while (i < 1000000) {
+                prodConsumer.produce();
+                i++;
+            }
+            } catch(InterruptedException e){
+                e.printStackTrace();
+            }
     }).start();
 
         new Thread(() -> {
+            int i=0;
             try {
-                prodConsumer.Consume();
+                while (i <1000000) {
+                    prodConsumer.consume();
+                    i++;
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
