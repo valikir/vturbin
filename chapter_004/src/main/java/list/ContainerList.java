@@ -1,5 +1,6 @@
 package list;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.*;
@@ -7,6 +8,7 @@ import java.util.*;
 @ThreadSafe
 public class ContainerList<E> implements DynamicContainer {
 
+    @GuardedBy("container")
     private int size = 10; // default size
     Object[] container = new Object[size];
     int index = 0;
@@ -37,16 +39,16 @@ public class ContainerList<E> implements DynamicContainer {
         return new Itr();
     }
 
-    @ThreadSafe
+
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
         int lastRet = -1; // index of last element returned; -1 if no such
 
-        synchronized public boolean hasNext() {
+        public boolean hasNext() {
             return cursor < index;
         }
 
-        synchronized public E next() {
+        public E next() {
             int i = cursor;
             if (i >= index)
                 throw new NoSuchElementException();
